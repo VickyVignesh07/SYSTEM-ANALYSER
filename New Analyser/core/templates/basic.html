@@ -1,0 +1,40 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+
+<h1>CPU Information</h1>
+<ul><h4>
+    <li>Physical core : {{cp1.physicalcore}}</li>
+    <li>Total Core : {{cp1.Totalcores}}</li>
+    <li>
+        Max Frequency :{{cp1.Maxfrequency}} Mhz
+        
+    </li>
+    <li>
+        Min Frequency :{{cp1.Minfrequency}} Mhz
+    </li>
+    <li>
+        Current Frequency :{{cp1.Currentfrequency}} Mhz
+    </li>
+    <li style="color :rgb(115, 22, 236);"> Boot_Time : {{cp1.Boot_time}}</li>
+   
+    <li> CPU Count :{{cp1.cpu_count}} </li>
+
+<h4>
+
+
+ 
+</body>  
+
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

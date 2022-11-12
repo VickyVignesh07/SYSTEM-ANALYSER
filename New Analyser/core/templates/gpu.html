@@ -1,0 +1,47 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10">System Analyser</h5>
+                        </div>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+                            <!-- <li class="breadcrumb-item"><a href="javascript:">Chart</a></li> -->
+                            <li class="breadcrumb-item"><a href="javascript:">Gpu  Information </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ breadcrumb ] end -->
+        
+        {{gpu1.id}} <br>
+       {{gpu1.name }}<br>
+       {{ gpu1.load }}<br>
+       {{ gpu1.freememory}}<br>
+       {{ gpu1.totalmemory}} <br>
+       {{ gpu1.usedmemory }}<br>
+        {{gpu1.temp }}<br>
+       {{ gpu1.uuid}}
+
+    </div>
+</div>        
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

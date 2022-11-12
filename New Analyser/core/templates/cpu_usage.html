@@ -1,0 +1,89 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<body>
+    <div class="pcoded-content">
+        <div class="pcoded-inner-content">
+            <!-- [ breadcrumb ] start -->
+            <div class="page-header">
+                <div class="page-block">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <div class="page-header-title">
+                                <h5 class="m-b-10">System Analyser</h5>
+                            </div>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+                                <!-- <li class="breadcrumb-item"><a href="javascript:">Chart</a></li> -->
+                                <li class="breadcrumb-item"><a href="javascript:">Cpu Usage</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- [ breadcrumb ] end -->
+            <h1>{{obj.cpu_usage}}</h1>
+            <div class="main-body">
+                <div class="page-wrapper">
+                    <!-- [ Main Content ] start -->
+                    <div class="row">
+                        <!-- [ Morris Chart ] start -->
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>CPU USAGE</h5>
+                                </div>
+                                <div class="card-block  border-bottom">
+                                    <div id="chart"></div>
+                                </div>
+                            </div>  
+                        </div>  
+                    </div>  
+                </div>  
+            </div>            
+    
+        </div>
+    </div>   
+
+    <script>
+        function getData() {
+           return Math.random()
+        }  
+
+        Plotly.plot('chart',[{
+            y:[getData()],
+            type:'bar'
+        }]);
+        
+        var cnt = 0;
+
+        setInterval(function(){
+
+            Plotly.extendTraces('chart',{ y:[[getData()]]}, [0]);
+            cnt++;
+            if(cnt > 500) {
+                Plotly.relayout('chart',{
+                    xaxis: {
+                        range: [cnt-500,cnt]
+                    }
+                });
+            }
+        },15);
+    </script>
+    </body>
+
+
+ 
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

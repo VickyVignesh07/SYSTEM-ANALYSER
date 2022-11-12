@@ -1,0 +1,373 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'poppins',sans-serif;
+    }
+    body{
+        height: 100vh;
+        display:flex;
+      
+    }
+    .skill{
+        width :160px;
+        height: 160px;
+        position: relative;
+    }
+    .outer{
+        height: 160px;
+        width: 160px;
+        border-radius: 50%;
+        padding: 20px;
+        box-shadow: 6px 6px 10px -1px rgba(0,0,0,0.15),
+                    -6px -6px 10px -1px rgba(255, 255,255, 0.7);
+        
+
+
+    }
+    .inner{
+        height: 120px;
+        width: 120px;
+        border-radius: 50%; 
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: inset 4px 4px 6px -1px rgba(0,0,0 ,0.2),
+        inset -4px -4px 6px -1px rgba(255, 255,255, 0.7),
+        -0.5px -0.5px 0px rgba(255, 255,255, 1),
+        0.5px 0.5px 0px rgba(0,0,0,0.15),
+        0px 12px 10px -10px rgba(0,0,0,0.05);
+
+    }
+    #number{
+        font-weight: 1200;
+        color: rgb(49, 174, 212);
+    }
+    circle{
+        fill: none;
+        stroke:url(#GradientColor);
+        stroke-width: 20px;
+        stroke-dasharray: 472;
+        stroke-dashoffset: 472;
+        animation: anim 2s linear forwards;
+    }
+    svg{
+        
+        position: absolute;
+        top: 0;
+        left:0;
+    }
+    @keyframes anim{
+        100%{
+            --x:368;
+            stroke-dashoffset:var(--x);
+        }
+    }
+
+    #one{
+        fill: none;
+        stroke:url(#GradientColor);
+        stroke-width: 20px;
+        stroke-dasharray: 472;
+        stroke-dashoffset: 472;
+        animation: anim1 2s linear forwards;
+    }
+    @keyframes anim1{
+        100%{
+            stroke-dashoffset:434;
+        }
+    }
+
+</style> 
+
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10">System Analyser</h5>
+                        </div>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+                            <!-- <li class="breadcrumb-item"><a href="javascript:">Chart</a></li> -->
+                            <li class="breadcrumb-item"><a href="javascript:">Disk Information </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ breadcrumb ] end -->
+        <div class="main-body">
+            <div class="page-wrapper">
+                <!-- [ Main Content ] start -->
+                <div class="row">
+                    <!-- [ Morris Chart ] start -->
+                    <div class="col-xl-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5><h3>Disk &nbsp;&nbsp;{{ disk2.disk_divice}}</h3></h5>
+                            </div>
+                            <div class="card-block  border-bottom">
+                                <canvas id="myChart" style="height: 300px;"></canvas>
+                            </div>
+                            <div class="card-block border-bottom">
+                                <div class="row d-flex align-items-center">
+                                    <div class="col-auto">
+                                        <i class="feather icon-circle f-30 text-c-green"></i>
+                                    </div>
+                                    <div class="col">
+                                        <h3 class="f-w-300">{{disk2.disk_size}}</h3>
+                                        <span class="d-block text-uppercase">TOTAL MEMORY</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-block border-bottom ">
+                                <div class="row d-flex align-items-center">
+                                    <div class="col-auto">
+                                        <i class="feather icon-check-circle f-30 text-c-blue"></i>
+                                    </div>
+                                    <div class="col">
+                                        <h3 class="f-w-300">{{disk2.used}}</h3>
+                                        <span class="d-block text-uppercase">USED MEMORY</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-block  border-bottom">
+                                <div class="row d-flex align-items-center">
+                                    <div class="col-auto">
+                                        <i class="feather icon-heart-on f-30 text-c-purple"></i>
+                                    </div>
+                                    <div class="col">
+                                        <h3 class="f-w-300">{{disk2.free}}</h3>
+                                        <span class="d-block text-uppercase">FREE MEMORY</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+                                <div class="card-header">
+                                    <h5>USED MEMORY PERCENTAGE</h5>
+                                </div>
+                                <center>
+    
+                                <div class="skill">
+                                    <div class="outer" >
+                                        <div class="inner">
+                                            <h3 id="number">
+                                                
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="160px" height="160px">
+                                        <defs>
+                                           <linearGradient id="GradientColor">
+                                              <stop offset="0%" stop-color="#e91e63" />
+                                              <stop offset="100%" stop-color="#673ab7" />
+                                           </linearGradient>
+                                        </defs>
+                                        <circle cx="80" cy="80" r="70" stroke-linecap="round" />
+                                    </svg>
+                                </div>   
+                                </center>                         
+                            
+    
+                        </div>
+                        
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5><h3>Disk &nbsp;&nbsp;{{ disk2.disk_divice1}}</h3></h5>
+                            </div>
+                            <div class="card-block  border-bottom">
+                                <canvas id="myChart1" style="height: 300px;"></canvas>
+                            </div>
+
+                            <div class="card-block border-bottom">
+                                <div class="row d-flex align-items-center">
+                                    <div class="col-auto">
+                                        <i class="feather icon-circle f-30 text-c-green"></i>
+                                    </div>
+                                    <div class="col">
+                                        <h3 class="f-w-300">{{disk2.disk_size1}} </h3>
+                                        <span class="d-block text-uppercase">TOTAL MEMORY</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-block  border-bottom">
+                                <div class="row d-flex align-items-center">
+                                    <div class="col-auto">
+                                        <i class="feather icon-check-circle f-30 text-c-blue"></i>
+                                    </div>
+                                    <div class="col">
+                                        <h3 class="f-w-300">{{disk2.used1}}</h3>
+                                        <span class="d-block text-uppercase">USED MEMORY</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-block  border-bottom">
+                                <div class="row d-flex align-items-center">
+                                    <div class="col-auto">
+                                        <i class="feather icon-heart-on f-30 text-c-purple"></i>
+                                    </div>
+                                    <div class="col">
+                                        <h3 class="f-w-300">{{disk2.free1}}</h3>
+                                        <span class="d-block text-uppercase">FREE MEMORY</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+                        
+                           
+                                <div class="card-header">
+                                    <h5>USED MEMORY PERCENTAGE</h5>
+                                </div>
+                                <center>
+    
+                                <div class="skill">
+                                    <div class="outer" >
+                                        <div class="inner">
+                                            <h3 id="number1">
+                                                
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="160px" height="160px">
+                                        <defs>
+                                           <linearGradient id="GradientColor">
+                                              <stop offset="0%" stop-color="#e91e63" />
+                                              <stop offset="100%" stop-color="#673ab7" />
+                                           </linearGradient>
+                                        </defs>
+                                        <circle id="one" cx="80" cy="80" r="70" stroke-linecap="round" />
+                                    </svg>
+                                </div>   
+                                </center>                         
+                           
+                        </div>
+
+                        </div>
+     
+                    </div>
+                    
+                </div> 
+            </div>       
+        </div>
+    </div>    
+</div>     
+<h1></h1> 
+
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Used Memory', 'Free Memory'],
+            datasets: [{
+                label: '# Memory',
+                data: ["{{ disk2.disk_used}}","{{disk2.disk_avail}}"],
+                backgroundColor: [
+                'rgba(255, 99, 132, 0.8)',
+                'rgba(54, 162, 235, 0.8)',
+                ],
+                borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: false
+                }
+            }
+        }
+    });
+
+
+    var ctx = document.getElementById('myChart1').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Used Memory', 'Free Memory',],
+            datasets: [{
+                label: '# Memory',
+                data: ["{{disk2.disk_used1}}", "{{ disk2.disk_avail1}}"],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.8)',
+                    'rgba(54, 162, 235, 0.8)',
+                    
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    /* svg script */
+    
+    let number = document.getElementById("number")
+    let counter =0;
+    let value = parseInt('{{disk2.disk_per}}')
+    setInterval(() =>{
+        if (counter ==value){
+            clearInterval();
+        }
+        else{
+            counter +=1;
+            number.innerHTML = counter +'%';
+        }
+    },20);
+
+    
+    let number1 = document.getElementById("number1")
+    let counter1 =0;
+    let value1 = parseInt('{{disk2.disk_per1}}')
+    setInterval(() =>{
+        if (counter1 ==value1){
+            clearInterval();
+        }
+        else{
+            counter1 +=1;
+            number1.innerHTML = counter1 +'%';
+        }
+    },20);
+
+    </script>
+
+
+
+
+
+    
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
